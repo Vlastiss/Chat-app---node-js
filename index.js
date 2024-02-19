@@ -1,5 +1,19 @@
 const express = require('express')
-const http = require('')
+const http = require('http')
 const socketIo = require('socket.io')
 
-const express = express()
+const app = express()
+const server = http.createServer(app)
+const io = socketIo(server)
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html")
+})
+
+io.on("connection", (socket) => {
+    console.log("New User Connected")
+})
+
+server.listen(3000, () => {
+    console.log("Server is listening on port 3000")
+})
